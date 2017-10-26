@@ -9,7 +9,8 @@ defmodule Pricey.Application do
     # Define workers and child supervisors to be supervised
     children = [
       # Start the Ecto repository
-      supervisor(Pricey.Repo, []),
+      # Disable database until we need it
+      # supervisor(Pricey.Repo, []),
       # Start the endpoint when the application starts
       supervisor(PriceyWeb.Endpoint, []),
       # Start your own worker by calling: Pricey.Worker.start_link(arg1, arg2, arg3)
