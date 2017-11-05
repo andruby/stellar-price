@@ -30,13 +30,13 @@ environment :dev do
   # dev mode.
   set dev_mode: true
   set include_erts: false
-  set cookie: :dev
+  set cookie: :"aU{/F.0=9*AF7TVRmG>z965qU{g~x5lPN[GjWLC&jcey,:j36Neq>2i~V5pva;b3"
 end
 
 environment :prod do
   set include_erts: true
   set include_src: false
-  set cookie: :prod
+  set cookie: :"tP*Gvy.y2v@GKhT)B2s~)G4pxaC)X$*yu;i^ZRLhs@;a$h$;n0t7P1:I!H;kV{n4"
 end
 
 # You may define one or more releases in this file.
@@ -50,3 +50,4 @@ release :pricey do
     :runtime_tools
   ]
 end
+
