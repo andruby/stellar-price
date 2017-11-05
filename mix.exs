@@ -42,6 +42,8 @@ defmodule Pricey.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:distillery, "~> 1.5", runtime: false},
+      {:tesla, "~> 0.9"},
+      {:hackney, "~> 1.10"},
     ]
   end
 
