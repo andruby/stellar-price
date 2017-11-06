@@ -15,4 +15,12 @@ defmodule Kraken do
     bid = String.to_float(bid_string)
     %{ask: ask, bid: bid}
   end
+
+  def name do
+    "Kraken"
+  end
+
+  def url do
+    "https://www.kraken.com/"
+  end
 end

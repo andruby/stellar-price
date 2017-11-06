@@ -15,4 +15,12 @@ defmodule Poloniex do
     bid = String.to_float(bid_string)
     %{ask: ask, bid: bid}
   end
+
+  def name do
+    "Poloniex"
+  end
+
+  def url do
+    "https://poloniex.com/exchange/#btc_str"
+  end
 end

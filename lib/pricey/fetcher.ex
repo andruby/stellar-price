@@ -18,15 +18,16 @@ defmodule Pricey.Fetcher do
     prices = async_prices()
     lowest_ask = Enum.sort_by(prices, fn(%{ask: ask}) -> ask end) |> List.first
     highest_bid = Enum.sort_by(prices, fn(%{bid: bid}) -> bid end) |> List.last
-    IO.puts "Lowest ask: #{lowest_ask[:ask]} by #{lowest_ask[:exchange]}"
-    IO.puts "Highest bid: #{highest_bid[:bid]} by #{highest_bid[:exchange]}"
+    PriceyWeb.Endpoint.broadcast "info:*", "lowest_ask", lowest_ask
+    PriceyWeb.Endpoint.broadcast "info:*", "highest_bid", highest_bid
   end
 
   def async_prices do
     Enum.map(@exchanges, fn(exchange) ->
       Task.async(fn ->
         apply(exchange, :prices, [])
-        |> Map.put(:exchange, exchange)
+        |> Map.put(:exchange_name, apply(exchange, :name, []))
+        |> Map.put(:exchange_url, apply(exchange, :url, []))
       end)
     end)
     |> Enum.map(&Task.await/1)

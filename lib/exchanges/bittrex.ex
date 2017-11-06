@@ -12,4 +12,12 @@ defmodule Bittrex do
     %{"Ask" => ask, "Bid" => bid} = body["result"]
     %{ask: ask, bid: bid}
   end
+
+  def name do
+    "Bittrex"
+  end
+
+  def url do
+    "https://bittrex.com/Market/Index?MarketName=BTC-XLM"
+  end
 end

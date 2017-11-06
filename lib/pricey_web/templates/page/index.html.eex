@@ -4,9 +4,12 @@
       <h1 class="title">
         Hi. My name is Pricey.
       </h1>
+      <h2 class="subtitle">
+        I keep track of the price of Stellar Lumens (XLM).
+      </h2>
       <div class="subtitle">
-        <p>You can currently buy 1,000 Stellar Lumens (XLM) for <strong>0.00012</strong> Bitcoins (BTC) at <strong>Bittrex</strong>.</p>
-        <p>You can sell 1,000 Stellar Lumens (XLM) for <strong>0.00011</strong> Bitcoins (BTC) at <strong>Kraken</strong>.</p>
+        <p>You can currently buy 1,000 Lumens (XLM) for <strong id="buy_btc_amount">...</strong> Bitcoins (BTC) at <strong><a href="#" id="buy_btc_exchange">...</a></strong>.</p>
+        <p>You can sell 1,000 Lumens (XLM) for <strong id="sell_btc_amount">...</strong> Bitcoins (BTC) at <strong><a href="#" id="sell_btc_exchange">...</a></strong>.</p>
       </div>
     </div>
   </div>
