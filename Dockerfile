@@ -1,5 +1,5 @@
 # Step 1: Get dependencies
-FROM elixir:1.4.5 as asset-builder-mix-getter
+FROM elixir:1.5.2 as asset-builder-mix-getter
 
 ENV HOME=/opt/app
 
@@ -27,7 +27,7 @@ RUN ./node_modules/.bin/brunch build --production
 
 ########################################################################
 # Step 3: Build elixir release
-FROM bitwalker/alpine-elixir:1.4.5 as releaser
+FROM bitwalker/alpine-elixir:1.5.2 as releaser
 
 ENV HOME=/opt/app
 
