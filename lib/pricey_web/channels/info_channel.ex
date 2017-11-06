@@ -1,7 +1,7 @@
 defmodule PriceyWeb.InfoChannel do
   use PriceyWeb, :channel
 
-  def join("info:*", payload, socket) do
+  def join("info:*", _payload, socket) do
     {:ok, socket}
   end
 end
