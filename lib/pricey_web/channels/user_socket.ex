@@ -3,6 +3,7 @@ defmodule PriceyWeb.UserSocket do
 
   ## Channels
   # channel "room:*", PriceyWeb.RoomChannel
+  channel "info:*", PriceyWeb.InfoChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

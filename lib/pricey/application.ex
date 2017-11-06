@@ -14,7 +14,7 @@ defmodule Pricey.Application do
       # Start the endpoint when the application starts
       supervisor(PriceyWeb.Endpoint, []),
       # Start your own worker by calling: Pricey.Worker.start_link(arg1, arg2, arg3)
-      # worker(Pricey.Worker, [arg1, arg2, arg3]),
+      worker(Pricey.Fetcher, []),
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
