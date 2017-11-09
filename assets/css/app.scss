@@ -2,3 +2,28 @@
 
 @import "bulma";
 
+
+span.droptag {
+  margin-left: 5px;
+  margin-right: 5px;
+  font-weight: bold;
+  i {
+    display: inline-block;
+  }
+}
+
+.box .media {
+  .image {
+    padding-top: 5px;
+  }
+}
+
+.toptitle {
+  margin-top: -40px;
+  margin-bottom: 40px;
+}
+
+.editable {
+  margin-right: 5px;
+  border-bottom: 1px dashed #ddd;
+}

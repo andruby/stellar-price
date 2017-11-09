@@ -59,18 +59,21 @@ let channel = socket.channel("info:*", {})
 let buy_btc_amount = document.getElementById('buy_btc_amount')
 let sell_btc_amount = document.getElementById('sell_btc_amount')
 let buy_btc_exchange = document.getElementById('buy_btc_exchange')
+let buy_btc_link = document.getElementById('buy_btc_link')
 let sell_btc_exchange = document.getElementById('sell_btc_exchange')
+let sell_btc_link = document.getElementById('sell_btc_link')
+
 
 channel.on("lowest_ask", payload => {
   buy_btc_amount.innerText = Math.round(payload.ask * 1000 * 100000000)/100000000
   buy_btc_exchange.innerText = payload.exchange_name
-  buy_btc_exchange.setAttribute("href", payload.exchange_url)
+  buy_btc_link.setAttribute("href", payload.exchange_url)
 })
 
 channel.on("highest_bid", payload => {
   sell_btc_amount.innerText = Math.round(payload.bid * 1000 * 100000000)/100000000
   sell_btc_exchange.innerText = payload.exchange_name
-  sell_btc_exchange.setAttribute("href", payload.exchange_url)
+  sell_btc_link.setAttribute("href", payload.exchange_url)
 })
 
 channel.join()
