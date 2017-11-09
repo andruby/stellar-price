@@ -62,13 +62,13 @@ let buy_btc_exchange = document.getElementById('buy_btc_exchange')
 let sell_btc_exchange = document.getElementById('sell_btc_exchange')
 
 channel.on("lowest_ask", payload => {
-  buy_btc_amount.innerText = payload.ask * 1000
+  buy_btc_amount.innerText = Math.round(payload.ask * 1000 * 100000000)/100000000
   buy_btc_exchange.innerText = payload.exchange_name
   buy_btc_exchange.setAttribute("href", payload.exchange_url)
 })
 
 channel.on("highest_bid", payload => {
-  sell_btc_amount.innerText = payload.bid * 1000
+  sell_btc_amount.innerText = Math.round(payload.bid * 1000 * 100000000)/100000000
   sell_btc_exchange.innerText = payload.exchange_name
   sell_btc_exchange.setAttribute("href", payload.exchange_url)
 })
