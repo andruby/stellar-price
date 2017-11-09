@@ -9,7 +9,7 @@
           <div class="media-content">
             <div class="cntent">
               <h1 class="title">
-                Hi. My name is Pricey.
+                Hi, my name is Pricey.
               </h1>
               <div class="subtitle">
                 I'll show you where to trade Stellar Lumens.
@@ -43,11 +43,16 @@
       <h1 class="title">
         How it works
       </h1>
-      <p>
-        Pricey keeps track of the price of Stellar Lumens (XLM) on the major
-        exchanges. It calculates the routes to go from the quote currency to the
-        base currency and shows you the route that yields the best price.
-      </p>
+      <div class="content">
+        <p>
+          Pricey keeps track of the price of Stellar Lumens (XLM) on the major
+          exchanges. It calculates the routes to go from the quote currency to the
+          base currency and shows you the route that yields the best price.
+        </p>
+        <p>
+          Prices are updated in realtime.
+        </p>
+      </div>
     </div>
   </div>
 </section>
