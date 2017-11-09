@@ -12,15 +12,14 @@ span.droptag {
   }
 }
 
-.box .media {
-  .image {
-    padding-top: 5px;
-  }
-}
+
 
 .toptitle {
   margin-top: -40px;
   margin-bottom: 40px;
+  .media img {
+      padding-top: 5px;
+    }
 }
 
 .editable {
