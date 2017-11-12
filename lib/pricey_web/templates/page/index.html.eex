@@ -18,26 +18,26 @@
           </div>
         </div>
       </div>
-      <div class="box">
+      <div class="box" id="app">
         <div class="content">
-          <p class="subtitle has-text-dark is-5">
+          <div class="subtitle has-text-dark is-5">
             I want to
             <span class="select is-small">
-              <select name="trade_direction" class="inline-select">
-                <option>buy</option>
-                <option>sell</option>
+              <select v-model="trade_direction" name="trade_direction" class="inline-select">
+                <option value="buy">buy</option>
+                <option value="sell">sell</option>
               </select>
             </span>
-            <span title="click to edit the amount" contenteditable="true" class="editable">1000</span>
+            <span contenteditable="true" @input="update" @update="base_amount = $event"></span>
             Lumens with
             <span class="select is-small" >
-              <select name="quote_currency" class="inline-select">
-                <option>Bitcoins</option>
-                <option>US Dollar</option>
-                <option>Euro</option>
+              <select v-model="quote_currency" name="quote_currency" class="inline-select">
+                <option value="btc">Bitcoins</option>
+                <option value="usd">US Dollar</option>
+                <option value="eur">Euro</option>
               </select>
             </span>
-          </p>
+          </div>
           <p>
             Buy 1,000 Lumens (XLM) for <strong id="buy_btc_amount">...</strong> Bitcoins (BTC) at <strong><a href="#" id="buy_btc_link"><span id="buy_btc_exchange">...</span> <i class="fa fa-external-link-square"></i></a></strong>.<br>
             Sell 1,000 Lumens (XLM) for <strong id="sell_btc_amount">...</strong> Bitcoins (BTC) at <strong><a href="#" id="sell_btc_link"><span id="sell_btc_exchange">...</span> <i class="fa fa-external-link-square"></i></a></strong>.
