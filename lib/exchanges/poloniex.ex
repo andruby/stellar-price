@@ -4,6 +4,7 @@ defmodule Poloniex do
   plug Tesla.Middleware.BaseUrl, "https://poloniex.com"
   plug Tesla.Middleware.Headers, %{"User-Agent" => "Elixir"}
   plug Tesla.Middleware.JSON
+  plug Tesla.Middleware.Timeout, timeout: 1_500
 
   adapter Tesla.Adapter.Hackney
 

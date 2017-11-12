@@ -4,6 +4,7 @@ defmodule Bittrex do
   plug Tesla.Middleware.BaseUrl, "https://bittrex.com/api/v1.1"
   plug Tesla.Middleware.Headers, %{"User-Agent" => "Elixir"}
   plug Tesla.Middleware.JSON
+  plug Tesla.Middleware.Timeout, timeout: 1_500
 
   adapter Tesla.Adapter.Hackney
 

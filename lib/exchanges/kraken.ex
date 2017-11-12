@@ -4,6 +4,7 @@ defmodule Kraken do
   plug Tesla.Middleware.BaseUrl, "https://api.kraken.com/0"
   plug Tesla.Middleware.Headers, %{"User-Agent" => "Elixir"}
   plug Tesla.Middleware.JSON
+  plug Tesla.Middleware.Timeout, timeout: 1_500
 
   adapter Tesla.Adapter.Hackney
 
