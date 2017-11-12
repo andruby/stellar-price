@@ -25,11 +25,16 @@ defmodule Pricey.Fetcher do
   def async_prices do
     Enum.map(@exchanges, fn(exchange) ->
       Task.async(fn ->
-        apply(exchange, :prices, [])
+        try do
+          apply(exchange, :prices, [])
+        rescue
+          _ in Elixir.Tesla.Middleware.Timeout -> %{timeout: true}
+        end
         |> Map.put(:exchange_name, apply(exchange, :name, []))
         |> Map.put(:exchange_url, apply(exchange, :url, []))
       end)
     end)
     |> Enum.map(&Task.await/1)
+    |> Enum.reject(&(Map.get(&1, :timeout, false)))
   end
 end
