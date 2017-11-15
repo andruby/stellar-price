@@ -65,8 +65,8 @@
       </h1>
       <div class="content">
         <p>
-          Pricey keeps track of the price of Stellar Lumens (XLM) on the major
-          exchanges. It calculates the routes to go from the quote currency to the
+          Pricey keeps track of the bid and ask price of Stellar Lumens (XLM) on the major
+          exchanges. It determines the routes to go from the quote currency to the
           base currency and shows you the route that yields the best price.
         </p>
         <p>
