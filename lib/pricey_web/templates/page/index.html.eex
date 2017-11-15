@@ -43,14 +43,14 @@
           </div>
 
           <ol :class="trade_direction">
-            <li v-for="best_price in route">
+            <li v-for="trade in trades">
               {{ trade_direction }}
-              <span class="base_price">{{ best_price.base_amount }} {{ best_price.base_currency }}</span>
+              <span class="base_price">{{ trade.base_amount }} {{ trade.base_currency }}</span>
               <span v-if="trade_direction == 'buy'">with</span>
               <span v-if="trade_direction == 'sell'">for</span>
-              <span class="quote_price">{{ best_price.quote_amount }} {{ best_price.quote_currency }}</span>
+              <span class="quote_price">{{ trade.quote_amount }} {{ trade.quote_currency }}</span>
               on
-              <strong><a :href="best_price.market_url">{{ best_price.exchange_name }} <i class="fa fa-external-link-square"></i></a></strong>
+              <strong><a :href="trade.market_url">{{ trade.exchange_name }} <i class="fa fa-external-link-square"></i></a></strong>
             </li>
           </ol>
         </div>

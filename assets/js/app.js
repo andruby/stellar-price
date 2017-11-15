@@ -58,15 +58,12 @@ let app = new Vue({
     quote_currency: function(newValue) { this.subscribe() },
   },
 
-  methods: {
-    update(event) {
-      this.base_amount = event.target.innerText
-    },
-
-    tick(payload) {
+  computed: {
+    trades: function() {
+      let route = this.route.slice()
       if (this.trade_direction == "buy") {
         let base_amount = this.base_amount
-        this.route = payload.route.reverse().map(function(best_price) {
+        return route.reverse().map(function(best_price) {
           best_price.base_amount = round(base_amount, best_price.base_currency)
           let quote_amount = base_amount * best_price.ask
           best_price.quote_amount = round(quote_amount, best_price.quote_currency)
@@ -76,7 +73,7 @@ let app = new Vue({
       } else {
         // selling
         let base_amount = this.base_amount
-        this.route = payload.route.map(function(best_price) {
+        return route.map(function(best_price) {
           best_price.base_amount = round(base_amount, best_price.base_currency)
           let quote_amount = base_amount * best_price.bid
           best_price.quote_amount = round(quote_amount, best_price.quote_currency)
@@ -84,6 +81,12 @@ let app = new Vue({
           return best_price
         })
       }
+    },
+  },
+
+  methods: {
+    update(event) {
+      this.base_amount = event.target.innerText
     },
 
     subscribe() {
@@ -93,7 +96,7 @@ let app = new Vue({
       }
       let topic = `info:${this.trade_direction}:${this.base_currency}:${this.quote_currency}`
       this.channel = socket.channel(topic, {})
-      this.channel.on("tick", this.tick)
+      this.channel.on("tick", (payload) => { this.route = payload.route })
       this.channel.join()
         .receive("ok", resp => { console.log("Successfully joined " + topic, resp) })
         .receive("error", resp => { console.log("Unable to join " + topic, resp) })
