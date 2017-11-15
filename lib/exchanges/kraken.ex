@@ -10,12 +10,12 @@ defmodule Kraken do
 
   def name, do: "Kraken"
 
-  def prices(:xlm, :btc), do: market_bid_ask("XXLMXXBT")
-  def prices(:eth, :eur), do: market_bid_ask("XETHZEUR")
-  def prices(:btc, :eur), do: market_bid_ask("XXBTZEUR")
-  def prices(:eth, :usd), do: market_bid_ask("XETHZUSD")
-  def prices(:btc, :usd), do: market_bid_ask("XXBTZUSD")
-  def prices(_, _), do: nil
+  defp market_id(:xlm, :btc), do: "XXLMXXBT"
+  defp market_id(:eth, :eur), do: "XETHZEUR"
+  defp market_id(:btc, :eur), do: "XXBTZEUR"
+  defp market_id(:eth, :usd), do: "XETHZUSD"
+  defp market_id(:btc, :usd), do: "XXBTZUSD"
+  defp market_id(_, _), do: nil
 
   defp market_bid_ask(market) do
     %Tesla.Env{status: 200, body: body} = get("/public/Ticker?pair=#{market}")
@@ -23,10 +23,19 @@ defmodule Kraken do
       "b" => [bid_string, _bid_volume, _bid_lot_volume]} = body["result"][market]
     ask = String.to_float(ask_string)
     bid = String.to_float(bid_string)
-    %{ask: ask, bid: bid, exchange_name: name(), market_url: market_url(market)}
+    %{ask: ask, bid: bid}
   end
 
   defp market_url(_) do
     "https://www.kraken.com/"
+  end
+
+  def price([base_currency, quote_currency]) do
+    case market_id(base_currency, quote_currency) do
+      nil -> nil
+      market ->
+        market_bid_ask(market)
+        |> Map.merge(%{base_currency: base_currency, quote_currency: quote_currency, exchange_name: name(), market_url: market_url(market)})
+    end
   end
 end

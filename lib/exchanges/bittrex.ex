@@ -10,17 +10,26 @@ defmodule Bittrex do
 
   def name, do: "Bittrex"
 
-  def prices(:xlm, :btc), do: market_bid_ask("BTC-XLM")
-  def prices(:xlm, :eth), do: market_bid_ask("ETH-XLM")
-  def prices(_, _), do: nil
+  defp market_id(:xlm, :btc), do: "BTC-XLM"
+  defp market_id(:xlm, :eth), do: "ETH-XLM"
+  defp market_id(_, _), do: nil
 
   defp market_bid_ask(market) do
     %Tesla.Env{status: 200, body: body} = get("/public/getticker?market=#{market}")
     %{"Ask" => ask, "Bid" => bid} = body["result"]
-    %{ask: ask, bid: bid, exchange_name: name(), market_url: market_url(market)}
+    %{ask: ask, bid: bid}
   end
 
   defp market_url(market) do
     "https://bittrex.com/Market/Index?MarketName=#{market}"
+  end
+
+  def price([base_currency, quote_currency]) do
+    case market_id(base_currency, quote_currency) do
+      nil -> nil
+      market ->
+        market_bid_ask(market)
+        |> Map.merge(%{base_currency: base_currency, quote_currency: quote_currency, exchange_name: name(), market_url: market_url(market)})
+    end
   end
 end

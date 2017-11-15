@@ -10,19 +10,28 @@ defmodule Bitstamp do
 
   def name, do: "Bitstamp"
 
-  def prices(:btc, :eur), do: market_bid_ask("btceur")
-  def prices(:btc, :usd), do: market_bid_ask("btcusd")
-  def prices(:eth, :eur), do: market_bid_ask("etheur")
-  def prices(:eth, :usd), do: market_bid_ask("ethusd")
-  def prices(_, _), do: nil
+  defp market_id(:btc, :eur), do: "btceur"
+  defp market_id(:btc, :usd), do: "btcusd"
+  defp market_id(:eth, :eur), do: "etheur"
+  defp market_id(:eth, :usd), do: "ethusd"
+  defp market_id(_, _), do: nil
 
   defp market_bid_ask(market) do
     %Tesla.Env{status: 200, body: body} = get("/ticker/#{market}")
     %{"ask" => ask, "bid" => bid} = body
-    %{ask: ask, bid: bid, exchange_name: name(), market_url: market_url(market)}
+    %{ask: ask, bid: bid}
   end
 
   defp market_url(_) do
     "https://www.bitstamp.net/"
+  end
+
+  def price([base_currency, quote_currency]) do
+    case market_id(base_currency, quote_currency) do
+      nil -> nil
+      market ->
+        market_bid_ask(market)
+        |> Map.merge(%{base_currency: base_currency, quote_currency: quote_currency, exchange_name: name(), market_url: market_url(market)})
+    end
   end
 end

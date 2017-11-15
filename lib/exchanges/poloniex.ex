@@ -10,8 +10,8 @@ defmodule Poloniex do
 
   def name, do: "Poloniex"
 
-  def prices(:xlm, :btc), do: market_bid_ask("BTC_STR")
-  def prices(_, _), do: nil
+  defp market_id(:xlm, :btc), do: "BTC_STR"
+  defp market_id(_, _), do: nil
 
   defp market_bid_ask(market) do
     %Tesla.Env{status: 200, body: body} = get("/public?command=returnOrderBook&currencyPair=#{market}&depth=1")
@@ -19,10 +19,19 @@ defmodule Poloniex do
       "bids" => [[bid_string, _bid_volume]|_]} = body
     ask = String.to_float(ask_string)
     bid = String.to_float(bid_string)
-    %{ask: ask, bid: bid, exchange_name: name(), market_url: market_url(market)}
+    %{ask: ask, bid: bid}
   end
 
   defp market_url(market) do
     "https://poloniex.com/exchange/##{market}"
+  end
+
+  def price([base_currency, quote_currency]) do
+    case market_id(base_currency, quote_currency) do
+      nil -> nil
+      market ->
+        market_bid_ask(market)
+        |> Map.merge(%{base_currency: base_currency, quote_currency: quote_currency, exchange_name: name(), market_url: market_url(market)})
+    end
   end
 end
