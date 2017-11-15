@@ -8,17 +8,19 @@ defmodule Bittrex do
 
   adapter Tesla.Adapter.Hackney
 
-  def prices do
-    %Tesla.Env{status: 200, body: body} = get("/public/getticker?market=BTC-XLM")
+  def name, do: "Bittrex"
+
+  def prices(:xlm, :btc), do: market_bid_ask("BTC-XLM")
+  def prices(:xlm, :eth), do: market_bid_ask("ETH-XLM")
+  def prices(_, _), do: nil
+
+  defp market_bid_ask(market) do
+    %Tesla.Env{status: 200, body: body} = get("/public/getticker?market=#{market}")
     %{"Ask" => ask, "Bid" => bid} = body["result"]
-    %{ask: ask, bid: bid}
+    %{ask: ask, bid: bid, exchange_name: name(), market_url: market_url(market)}
   end
 
-  def name do
-    "Bittrex"
-  end
-
-  def url do
-    "https://bittrex.com/Market/Index?MarketName=BTC-XLM"
+  defp market_url(market) do
+    "https://bittrex.com/Market/Index?MarketName=#{market}"
   end
 end
