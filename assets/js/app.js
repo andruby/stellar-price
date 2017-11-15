@@ -25,13 +25,19 @@ import {Socket} from "phoenix"
 let socket = new Socket("/socket")
 socket.connect()
 
+Vue.component('route-line', {
+  template: '#route-line'
+})
+
 let app = new Vue({
   el: "#app",
   data: {
     trade_direction: "buy",
     base_amount: "1000",
+    base_currency: "xlm",
     quote_currency: "eur",
     channel: null,
+    route: [],
   },
 
   mounted() {
@@ -50,14 +56,32 @@ let app = new Vue({
     },
 
     tick(payload) {
-      console.log(payload)
+      if (this.trade_direction == "buy") {
+        let base_amount = this.base_amount
+        this.route = payload.route.reverse().map(function(best_price) {
+          best_price.base_amount = base_amount
+          best_price.quote_amount = base_amount * best_price.ask
+          base_amount = best_price.quote_amount
+          return best_price
+        }).reverse()
+      } else {
+        // selling
+        let base_amount = this.base_amount
+        this.route = payload.route.map(function(best_price) {
+          best_price.base_amount = base_amount
+          best_price.quote_amount = base_amount * best_price.bid
+          base_amount = best_price.quote_amount
+          return best_price
+        })
+      }
     },
 
     subscribe() {
+      this.route = []
       if (this.channel) {
         this.channel.leave()
       }
-      let topic = `info:${this.trade_direction}:${this.quote_currency}`
+      let topic = `info:${this.trade_direction}:${this.base_currency}:${this.quote_currency}`
       this.channel = socket.channel(topic, {})
       this.channel.on("tick", this.tick)
       this.channel.join()

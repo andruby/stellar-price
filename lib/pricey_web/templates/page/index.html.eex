@@ -39,10 +39,18 @@
               </select>
             </span>
           </div>
-          <p>
-            Buy 1,000 Lumens (XLM) for <strong id="buy_btc_amount">...</strong> Bitcoins (BTC) at <strong><a href="#" id="buy_btc_link"><span id="buy_btc_exchange">...</span> <i class="fa fa-external-link-square"></i></a></strong>.<br>
-            Sell 1,000 Lumens (XLM) for <strong id="sell_btc_amount">...</strong> Bitcoins (BTC) at <strong><a href="#" id="sell_btc_link"><span id="sell_btc_exchange">...</span> <i class="fa fa-external-link-square"></i></a></strong>.
-          </p>
+
+          <ol>
+            <li v-for="best_price in route">
+              {{ trade_direction }}
+              <strong>{{ best_price.base_amount }} {{ best_price.base_currency }}</strong>
+              <span v-if="trade_direction == 'buy'">with</span>
+              <span v-if="trade_direction == 'sell'">for</span>
+              <strong>{{ best_price.quote_amount }} {{ best_price.quote_currency }}</strong>
+              on
+              <strong><a :href="best_price.market_url">{{ best_price.exchange_name }} <i class="fa fa-external-link-square"></i></a></strong>
+            </li>
+          </ol>
         </div>
       </div>
     </div>
