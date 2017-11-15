@@ -70,10 +70,10 @@ defmodule Pricey.Fetcher do
           prices[[base_currency, quote_currency]][:highest_bid]
         end)
       end)
-      optimal_buy_route = Enum.sort_by(buy_routes, fn(route) ->
+      optimal_sell_route = Enum.sort_by(sell_routes, fn(route) ->
         Enum.reduce(route, 1.0, &(&1[:bid] * &2))
       end) |> List.last
-      broadcast(indirect_base_currency, indirect_quote_currency, "sell", optimal_buy_route)
+      broadcast(indirect_base_currency, indirect_quote_currency, "sell", optimal_sell_route)
     end)
   end
 
