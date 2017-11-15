@@ -35,7 +35,7 @@ let app = new Vue({
     trade_direction: "buy",
     base_amount: "1000",
     base_currency: "xlm",
-    quote_currency: "eur",
+    quote_currency: "usd",
     channel: null,
     route: [],
   },
