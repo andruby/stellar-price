@@ -33,6 +33,7 @@
             <span class="select is-small" >
               <select v-model="quote_currency" name="quote_currency" class="inline-select">
                 <option value="btc">Bitcoins</option>
+                <option value="eth">Ethereum</option>
                 <option value="usd">US Dollar</option>
                 <option value="eur">Euro</option>
               </select>
