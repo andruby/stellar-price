@@ -37,7 +37,6 @@ let round = function(amount, currency) {
   }
 }
 
-
 let app = new Vue({
   el: "#app",
   data: {

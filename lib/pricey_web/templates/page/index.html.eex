@@ -29,7 +29,9 @@
               </select>
             </span>
             <span contenteditable="true" @input="update" @update="base_amount = $event"></span>
-            Lumens with
+            Lumens
+            <span v-if="trade_direction == 'buy'">with</span>
+            <span v-if="trade_direction == 'sell'">for</span>
             <span class="select is-small" >
               <select v-model="quote_currency" name="quote_currency" class="inline-select">
                 <option value="btc">Bitcoins</option>
@@ -40,13 +42,13 @@
             </span>
           </div>
 
-          <ol>
+          <ol :class="trade_direction">
             <li v-for="best_price in route">
               {{ trade_direction }}
-              <strong>{{ best_price.base_amount }} {{ best_price.base_currency }}</strong>
+              <span class="base_price">{{ best_price.base_amount }} {{ best_price.base_currency }}</span>
               <span v-if="trade_direction == 'buy'">with</span>
               <span v-if="trade_direction == 'sell'">for</span>
-              <strong>{{ best_price.quote_amount }} {{ best_price.quote_currency }}</strong>
+              <span class="quote_price">{{ best_price.quote_amount }} {{ best_price.quote_currency }}</span>
               on
               <strong><a :href="best_price.market_url">{{ best_price.exchange_name }} <i class="fa fa-external-link-square"></i></a></strong>
             </li>

@@ -23,3 +23,23 @@
   margin-left: 5px;
   margin-right: 5px;
 }
+
+.sell {
+  li:first-child .base_price {
+    font-weight: bold;
+  }
+
+  li:last-child .quote_price {
+    font-weight: bold;
+  }
+}
+
+.buy {
+  li:first-child .quote_price {
+    font-weight: bold;
+  }
+
+  li:last-child .base_price {
+    font-weight: bold;
+  }
+}
