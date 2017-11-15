@@ -20,6 +20,7 @@
       </div>
       <div class="box" id="app">
         <div class="content">
+
           <div class="subtitle has-text-dark is-5">
             I want to
             <span class="select is-small">
@@ -28,7 +29,7 @@
                 <option value="sell">sell</option>
               </select>
             </span>
-            <span contenteditable="true" @input="update" @update="base_amount = $event"></span>
+            <span contenteditable="true" @input="update" @update="base_amount = $event" class="editable" title="click to edit the amount"></span>
             Lumens
             <span v-if="trade_direction == 'buy'">with</span>
             <span v-if="trade_direction == 'sell'">for</span>
@@ -42,6 +43,13 @@
             </span>
           </div>
 
+          <div v-if="trades.length == 0" class="has-text-grey">
+            <span class="icon">
+              <i class="fa fa-refresh fa-spin"></i>
+            </span>
+            finding optimal route
+          </div>
+
           <ol :class="trade_direction">
             <li v-for="trade in trades">
               {{ trade_direction }}
@@ -53,6 +61,7 @@
               <strong><a :href="trade.market_url">{{ trade.exchange_name }} <i class="fa fa-external-link-square"></i></a></strong>
             </li>
           </ol>
+
         </div>
       </div>
     </div>

@@ -61,6 +61,9 @@ let app = new Vue({
   computed: {
     trades: function() {
       let route = this.route.slice()
+      if (route.length == 0) {
+        return []
+      }
       if (this.trade_direction == "buy") {
         let base_amount = this.base_amount
         return route.reverse().map(function(best_price) {
