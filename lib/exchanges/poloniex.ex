@@ -17,8 +17,8 @@ defmodule Poloniex do
     %Tesla.Env{status: 200, body: body} = get("/public?command=returnOrderBook&currencyPair=#{market}&depth=1")
     %{"asks" => [[ask_string, _ask_volume]|_],
       "bids" => [[bid_string, _bid_volume]|_]} = body
-    ask = String.to_float(ask_string)
-    bid = String.to_float(bid_string)
+    {ask, _} = Float.parse(ask_string)
+    {bid, _} = Float.parse(bid_string)
     %{ask: ask, bid: bid}
   end
 

@@ -18,7 +18,9 @@ defmodule Bitstamp do
 
   defp market_bid_ask(market) do
     %Tesla.Env{status: 200, body: body} = get("/ticker/#{market}")
-    %{"ask" => ask, "bid" => bid} = body
+    %{"ask" => ask_string, "bid" => bid_string} = body
+    {ask, _} = Float.parse(ask_string)
+    {bid, _} = Float.parse(bid_string)
     %{ask: ask, bid: bid}
   end
 

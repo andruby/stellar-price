@@ -21,8 +21,8 @@ defmodule Kraken do
     %Tesla.Env{status: 200, body: body} = get("/public/Ticker?pair=#{market}")
     %{"a" => [ask_string, _ask_volume, _ask_lot_volume],
       "b" => [bid_string, _bid_volume, _bid_lot_volume]} = body["result"][market]
-    ask = String.to_float(ask_string)
-    bid = String.to_float(bid_string)
+    {ask, _} = Float.parse(ask_string)
+    {bid, _} = Float.parse(bid_string)
     %{ask: ask, bid: bid}
   end
 
