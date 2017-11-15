@@ -29,6 +29,15 @@ Vue.component('route-line', {
   template: '#route-line'
 })
 
+let round = function(amount, currency) {
+  if (currency == "eur" || currency == "usd") {
+    return Math.round(amount*100)/100
+  } else {
+    return Math.round(amount*100000000)/100000000
+  }
+}
+
+
 let app = new Vue({
   el: "#app",
   data: {
@@ -59,18 +68,20 @@ let app = new Vue({
       if (this.trade_direction == "buy") {
         let base_amount = this.base_amount
         this.route = payload.route.reverse().map(function(best_price) {
-          best_price.base_amount = base_amount
-          best_price.quote_amount = base_amount * best_price.ask
-          base_amount = best_price.quote_amount
+          best_price.base_amount = round(base_amount, best_price.base_currency)
+          let quote_amount = base_amount * best_price.ask
+          best_price.quote_amount = round(quote_amount, best_price.quote_currency)
+          base_amount = quote_amount
           return best_price
         }).reverse()
       } else {
         // selling
         let base_amount = this.base_amount
         this.route = payload.route.map(function(best_price) {
-          best_price.base_amount = base_amount
-          best_price.quote_amount = base_amount * best_price.bid
-          base_amount = best_price.quote_amount
+          best_price.base_amount = round(base_amount, best_price.quote_currency)
+          let quote_amount = base_amount * best_price.bid
+          best_price.quote_amount = round(quote_amount, best_price.quote_currency)
+          base_amount = quote_amount
           return best_price
         })
       }
