@@ -77,7 +77,7 @@ let app = new Vue({
         // selling
         let base_amount = this.base_amount
         this.route = payload.route.map(function(best_price) {
-          best_price.base_amount = round(base_amount, best_price.quote_currency)
+          best_price.base_amount = round(base_amount, best_price.base_currency)
           let quote_amount = base_amount * best_price.bid
           best_price.quote_amount = round(quote_amount, best_price.quote_currency)
           base_amount = quote_amount
