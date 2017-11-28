@@ -22,6 +22,10 @@ import Vue from "vue/dist/vue.common.js"
 
 import {Socket} from "phoenix"
 
+// Add smooth scrolling for anchor links
+import SmoothScroll from "smooth-scroll"
+var scroll = new SmoothScroll('[data-smoothscroll]');
+
 let socket = new Socket("/socket")
 socket.connect()
 
@@ -46,16 +50,18 @@ let app = new Vue({
     quote_currency: "usd",
     channel: null,
     route: [],
+    allTicks: [],
   },
 
   mounted() {
     this.$el.querySelector('[contenteditable]').innerText = this.base_amount;
-    this.subscribe()
+    this.subscribeSpecificRoute()
+    this.subscribeAll()
   },
 
   watch: {
-    trade_direction: function(newValue) { this.subscribe() },
-    quote_currency: function(newValue) { this.subscribe() },
+    trade_direction: function(newValue) { this.subscribeSpecificRoute() },
+    quote_currency: function(newValue) { this.subscribeSpecificRoute() },
   },
 
   computed: {
@@ -92,7 +98,7 @@ let app = new Vue({
       this.base_amount = event.target.innerText
     },
 
-    subscribe() {
+    subscribeSpecificRoute() {
       this.route = []
       if (this.channel) {
         this.channel.leave()
@@ -103,6 +109,29 @@ let app = new Vue({
       this.channel.join()
         .receive("ok", resp => { console.log("Successfully joined " + topic, resp) })
         .receive("error", resp => { console.log("Unable to join " + topic, resp) })
+    },
+
+    subscribeAll() {
+      let all_channel = socket.channel("info:all", {})
+      all_channel.on("tick", (payload) => {
+        let tick_index = this.allTicks.findIndex((tick) => {
+          return tick.exchange_name == payload.exchange_name && tick.base_currency == payload.base_currency && tick.quote_currency == payload.quote_currency
+        })
+        if (tick_index > -1) {
+          this.allTicks[tick_index] = payload
+        } else {
+          this.allTicks.push(payload)
+        }
+        this.allTicks.sort((a, b) => {
+          return a.base_currency.localeCompare(b.base_currency) ||
+                 a.quote_currency.localeCompare(b.quote_currency) ||
+                 a.exchange_name.localeCompare(b.exchange_name)
+        })
+      })
+      all_channel.join()
+        .receive("ok", resp => { console.log("Successfully joined info:all", resp) })
+        .receive("error", resp => { console.log("Unable to join info:all", resp) })
+
     },
   },
 });

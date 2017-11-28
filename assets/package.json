@@ -10,6 +10,7 @@
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "sass-brunch": "^2.10.4",
+    "smooth-scroll": "^12.1.5",
     "vue": "^2.5.3"
   },
   "devDependencies": {

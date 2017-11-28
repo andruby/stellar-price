@@ -22,6 +22,10 @@ defmodule Pricey.Fetcher do
     ],
   }
 
+  def base_pairs do
+    @base_pairs
+  end
+
   def start_link do
     Task.start_link(__MODULE__, :run, [])
   end
@@ -87,6 +91,10 @@ defmodule Pricey.Fetcher do
       end
     end)
     |> Enum.reject(&(is_nil(&1)))
+
+    for price <- prices do
+      PriceyWeb.Endpoint.broadcast "info:all", "tick", price
+    end
 
     lowest_ask = Enum.sort_by(prices, fn(%{ask: ask}) -> ask end) |> List.first
     highest_bid = Enum.sort_by(prices, fn(%{bid: bid}) -> bid end) |> List.last
