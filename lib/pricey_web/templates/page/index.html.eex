@@ -89,22 +89,20 @@
                 figure out where to buy or sell Stellar Lumens.
               </p>
               <p>
-                Pricey keeps track of the bid and ask price of Stellar Lumens
-                (XLM) on the major exchanges. It determines the routes to go
-                from the quote currency to the base currency and shows you the
-                route that yields the best price.
+                Pricey keeps track of bid and ask prices of Stellar Lumens (XLM)
+                on major exchanges. It determines the routes to go from the
+                quote currency to the base currency and shows you the route that
+                yields the best price.
               </p>
               <p>
-                You can chose from 4 quote currencies (USD, EUR, BTC and ETH)
-                and set the amount of Lumens. Stellar Price computes the optimal
-                currency exchange route by tracking 16 currency pairs on 5
-                popular exchanges, which gives it a total of 28 possible routing
-                combinations. We've chosen popular exchanges with a good
-                reputation and good liquidity to minimize counterparty risk for
-                users.
+                You can chose from several quote currencies and set the amount
+                of Lumens. Pricey computes the optimal currency exchange route
+                by tracking 16 markets on 5 popular exchanges, for a total of 28
+                possible routes. We've chosen popular exchanges with a good
+                reputation and good liquidity to minimize counterparty risk.
               </p>
               <p>
-                Prices are updated in real-time us a websocket connection.
+                Prices are updated in real-time.
               </p>
             </div>
           </div>
