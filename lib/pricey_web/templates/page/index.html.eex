@@ -78,7 +78,7 @@
   <section class="hero">
     <div class="hero-body">
       <div class="container">
-        <div class="columns">
+        <div class="columns is-variable is-5">
           <div class="column">
             <h1 class="title">
               How it works
@@ -138,4 +138,16 @@
       </div>
     </div>
   </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="content has-text-centered">
+        <p>
+          Pricey by <a href="http://twitter.com/andruby">@andruby</a>
+        <br>
+          Contributions welcome at <a href="https://github.com/andruby/pricey">github.com/andruby/pricey</a>
+        </p>
+      </div>
+    </div>
+  </footer>
 </div>
