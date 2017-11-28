@@ -123,8 +123,10 @@ let app = new Vue({
           this.allTicks.push(payload)
         }
         this.allTicks.sort((a, b) => {
-          return a.base_currency.localeCompare(b.base_currency) ||
-                 a.quote_currency.localeCompare(b.quote_currency) ||
+          return a.base_currency.localeCompare(b.base_currency) * (-1) ||
+                 a.quote_currency.localeCompare(b.quote_currency) * (-1) ||
+                 a.bid < b.bid ||
+                 a.ask < b.ask ||
                  a.exchange_name.localeCompare(b.exchange_name)
         })
       })
