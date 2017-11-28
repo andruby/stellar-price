@@ -125,8 +125,8 @@ let app = new Vue({
         this.allTicks.sort((a, b) => {
           return a.base_currency.localeCompare(b.base_currency) * (-1) ||
                  a.quote_currency.localeCompare(b.quote_currency) * (-1) ||
-                 a.bid < b.bid ||
-                 a.ask < b.ask ||
+                 b.bid.toString().localeCompare(a.bid.toString()) ||
+                 b.ask.toString().localeCompare(a.ask.toString()) ||
                  a.exchange_name.localeCompare(b.exchange_name)
         })
       })
