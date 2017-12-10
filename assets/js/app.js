@@ -19,6 +19,10 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import Vue from "vue/dist/vue.common.js"
+import VueCookie from "vue-cookie"
+
+// Tell Vue to use the plugin
+Vue.use(VueCookie);
 
 import {Socket} from "phoenix"
 
@@ -54,14 +58,16 @@ let app = new Vue({
   },
 
   mounted() {
-    this.$el.querySelector('[contenteditable]').innerText = this.base_amount;
+    this.loadState()
+    this.$el.querySelector('[contenteditable]').innerText = this.base_amount
     this.subscribeSpecificRoute()
     this.subscribeAll()
   },
 
   watch: {
-    trade_direction: function(newValue) { this.subscribeSpecificRoute() },
-    quote_currency: function(newValue) { this.subscribeSpecificRoute() },
+    trade_direction: function(newValue) { this.subscribeSpecificRoute(); this.stateChanged() },
+    quote_currency: function(newValue) { this.subscribeSpecificRoute(); this.stateChanged() },
+    base_amount: function(newValue) { this.stateChanged() }
   },
 
   computed: {
@@ -134,6 +140,20 @@ let app = new Vue({
         .receive("ok", resp => { console.log("Successfully joined info:all", resp) })
         .receive("error", resp => { console.log("Unable to join info:all", resp) })
 
+    },
+
+    stateChanged() {
+      Vue.cookie.set('base_amount', this.base_amount, { expires: '1Y' })
+      Vue.cookie.set('trade_direction', this.trade_direction, { expires: '1Y' })
+      Vue.cookie.set('base_currency', this.base_currency, { expires: '1Y' })
+      Vue.cookie.set('quote_currency', this.quote_currency, { expires: '1Y' })
+    },
+
+    loadState() {
+      if (Vue.cookie.get('base_amount')) { this.base_amount = Vue.cookie.get('base_amount') }
+      if (Vue.cookie.get('trade_direction')) { this.trade_direction = Vue.cookie.get('trade_direction') }
+      if (Vue.cookie.get('base_currency')) { this.base_currency = Vue.cookie.get('base_currency') }
+      if (Vue.cookie.get('quote_currency')) { this.quote_currency = Vue.cookie.get('quote_currency') }
     },
   },
 });
