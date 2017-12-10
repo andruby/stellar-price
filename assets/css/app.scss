@@ -51,3 +51,12 @@ a.is-dark {
 .small-line-height {
   line-height: 1.1;
 }
+
+.amount {
+  color: $dark;
+  display: inline;
+  border: none;
+  border-bottom: 1px dashed #ddd;
+  font-size: 1.25rem;
+  width: auto;
+}
