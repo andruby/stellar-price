@@ -48,13 +48,35 @@ let app = new Vue({
     base_amount: "1000",
     base_currency: "xlm",
     quote_currency: "usd",
+    currencies: [
+      { name: "Bitcoin", tag: "btc" },
+      { name: "Ethereum", tag: "eth" },
+      { name: "US Dollar", tag: "usd" },
+      { name: "Euro", tag: "eur" }
+    ],
+    directions: ["buy", "sell"],
     channel: null,
     route: [],
     allTicks: [],
   },
 
   mounted() {
-    this.$el.querySelector('[contenteditable]').innerText = this.base_amount;
+    let params = this.getQueryParams()
+
+    if (params["type"] && this.directions.indexOf(params["type"]) !== -1) {
+      this.trade_direction = params["type"]
+    }
+
+    if (params["amount"]) {
+      this.base_amount = params["amount"]
+    }
+
+    if (params["currency"] && this.currencies.some(function(c) {
+      return c.tag === params["currency"];
+    })) {
+      this.quote_currency = params["currency"]
+    }
+
     this.subscribeSpecificRoute()
     this.subscribeAll()
   },
@@ -94,8 +116,19 @@ let app = new Vue({
   },
 
   methods: {
-    update(event) {
-      this.base_amount = event.target.innerText
+    // https://stackoverflow.com/a/1404074
+    getQueryParams() {
+      let str = window.location.search
+      let objURL = {}
+
+      str.replace(
+          new RegExp( "([^?=&]+)(=([^&]*))?", "g" ),
+          function( $0, $1, $2, $3 ) {
+              objURL[ $1 ] = $3;
+          }
+      )
+
+      return objURL
     },
 
     subscribeSpecificRoute() {

@@ -26,20 +26,20 @@
               I want to
               <span class="select is-small">
                 <select v-model="trade_direction" name="trade_direction" class="inline-select">
-                  <option value="buy">buy</option>
-                  <option value="sell">sell</option>
+                  <option v-for="direction in directions" :value="direction">
+                  {{ direction }}
+                  </option>
                 </select>
               </span>
-              <span contenteditable="true" @input="update" @update="base_amount = $event" class="editable" title="click to edit the amount"></span>
+              <input id="amount" class="amount" type="number" v-model="base_amount">
               Lumens
               <span v-if="trade_direction == 'buy'">with</span>
               <span v-if="trade_direction == 'sell'">for</span>
-              <span class="select is-small" >
+              <span class="select is-small">
                 <select v-model="quote_currency" name="quote_currency" class="inline-select">
-                  <option value="btc">Bitcoins</option>
-                  <option value="eth">Ethereum</option>
-                  <option value="usd">US Dollar</option>
-                  <option value="eur">Euro</option>
+                  <option v-for="currency in currencies" :value="currency.tag">
+                  {{ currency.name }}
+                  </option>
                 </select>
               </span>
             </div>
