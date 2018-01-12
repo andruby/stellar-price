@@ -88,6 +88,7 @@ defmodule Pricey.Fetcher do
         apply(exchange, :price, [[base_currency, quote_currency]])
       rescue
         _ in Elixir.Tesla.Middleware.Timeout -> nil
+        _ in FunctionClauseError -> nil # Kraken is down and still replies with 200
       end
     end)
     |> Enum.reject(&(is_nil(&1)))
