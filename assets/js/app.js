@@ -157,3 +157,16 @@ let app = new Vue({
     },
   },
 });
+
+
+// GA
+window.trackOutboundLink = function(url, extra) {
+  debugger
+  gtag('event', 'click', {
+    'event_category': 'outbound',
+    'event_label': url,
+    'event_action': extra,
+    'transport_type': 'beacon',
+    'event_callback': function(){document.location = url;}
+  });
+}

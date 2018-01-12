@@ -59,7 +59,7 @@
                 <span v-if="trade_direction == 'sell'">for</span>
                 <span class="quote_price">{{ trade.quote_amount }} {{ trade.quote_currency }}</span>
                 on
-                <strong><a :href="trade.market_url">{{ trade.exchange_name }} <i class="fa fa-external-link-square"></i></a></strong>
+                <strong><a :href="trade.market_url" onclick="trackOutboundLink(this.href, 'suggestion'); return false;">{{ trade.exchange_name }} <i class="fa fa-external-link-square"></i></a></strong>
               </li>
             </ol>
 
@@ -125,7 +125,7 @@
                   <td>{{ tick.ask }}</td>
                   <td>{{ tick.base_currency }}/{{ tick.quote_currency }}</td>
                   <td>
-                    <a :href="tick.market_url" class="is-dark"><i class="fa fa-external-link-square"></i></a>
+                    <a :href="tick.market_url" onclick="trackOutboundLink(this.href, 'list'); return false;" class="is-dark"><i class="fa fa-external-link-square"></i></a>
                   </td>
                 </tr>
               </tbody>
