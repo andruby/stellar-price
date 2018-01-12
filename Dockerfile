@@ -22,7 +22,7 @@ COPY --from=asset-builder-mix-getter $HOME/deps $HOME/deps
 
 WORKDIR $HOME/assets
 COPY assets/ ./
-RUN yarn install
+RUN npm install
 RUN ./node_modules/.bin/brunch build --production
 
 ########################################################################
