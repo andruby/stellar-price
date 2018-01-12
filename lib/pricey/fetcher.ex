@@ -1,7 +1,7 @@
 defmodule Pricey.Fetcher do
   use Task, restart: :permanent
 
-  @exchanges [Poloniex, Bittrex, Kraken, Gdax, Bitstamp]
+  @exchanges [Poloniex, Bittrex, Kraken, Gdax, Bitstamp, Binance]
   @base_pairs [
     [:eth, :eur],
     [:btc, :eur],
